@@ -1,7 +1,8 @@
 <template>
 	<div class="container">
 		<div class="map_container">
-			<map id="map" class="map" :latitude="latitude" :longitude="longitude" :markers="markers" @marker-tap="markerTap"></map>
+			<map id="map" class="map" :latitude="latitude" :longitude="longitude" :markers="markers"
+				@marker-tap="markerTap"></map>
 		</div>
 
 		<div class="toiletsContainer">
@@ -37,10 +38,6 @@
 		onMounted,
 		onBeforeMount
 	} from 'vue';
-	// const bmap = require('../../static/map/bmap-wx.js');
-	// const BMap = new bmap.BMapWX({
-	// 	ak: 'USr6JFLIBsbvx5EicRRmPmE7Mi3QsVDX'
-	// });
 	const bmap = require('../../static/map/myMapUtils.js');
 	const BMap = new bmap.MapUtils({
 		id: 'map'
@@ -81,14 +78,8 @@
 					})
 			};
 			const getLocation = () => {
-				BMap.getWXLocation(...getLocationObj)
-				console.log('getLocation', latitude, longitude)
-				// let point = new BMapGL.Point(latitude, longitude);
-				let point = {
-					latitude,
-					longitude
-				}
-				BMap.setCenter(point)
+				BMap.getCenterLocation();
+				BMap.moveToCenter(0, 0);
 			};
 			return {
 				latitude,
@@ -135,13 +126,6 @@
 			gradeOnChange(e) {
 				console.log('rate发生改变:' + JSON.stringify(e))
 			},
-			async getBMapJSAPI() {
-				let result = await uni.request({
-					url: 'http//api.map.baidu.com/api?type=webgl&v=1.0&ak=USr6JFLIBsbvx5EicRRmPmE7Mi3QsVDX',
-				})
-				const [res, err] = result;
-				console.log(res, err)
-			}
 
 		}
 	}

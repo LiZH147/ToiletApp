@@ -38,13 +38,8 @@ const _sfc_main = {
       });
     };
     const getLocation = () => {
-      BMap.getWXLocation(...getLocationObj);
-      console.log("getLocation", latitude, longitude);
-      let point = {
-        latitude,
-        longitude
-      };
-      BMap.setCenter(point);
+      BMap.getCenterLocation();
+      BMap.moveToCenter(0, 0);
     };
     return {
       latitude,
@@ -88,13 +83,6 @@ const _sfc_main = {
     },
     gradeOnChange(e) {
       console.log("rate发生改变:" + JSON.stringify(e));
-    },
-    async getBMapJSAPI() {
-      let result = await common_vendor.index.request({
-        url: "http//api.map.baidu.com/api?type=webgl&v=1.0&ak=USr6JFLIBsbvx5EicRRmPmE7Mi3QsVDX"
-      });
-      const [res, err] = result;
-      console.log(res, err);
     }
   }
 };
