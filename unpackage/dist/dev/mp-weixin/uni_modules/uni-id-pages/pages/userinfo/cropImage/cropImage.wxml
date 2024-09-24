@@ -1,1 +1,1 @@
-<view class="content"><lime-clipper wx:if="{{c}}" bindsuccess="{{a}}" bindcancel="{{b}}" u-i="6df72e1b-0" bind:__l="__l" u-p="{{c}}"/></view>
+<view class="content"><lime-clipper wx:if="{{c}}" bindsuccess="{{a}}" bindcancel="{{b}}" u-i="b72b6236-0" bind:__l="__l" u-p="{{c}}"/></view>

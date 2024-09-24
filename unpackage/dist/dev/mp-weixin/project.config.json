@@ -18,7 +18,7 @@
     }
   },
   "compileType": "miniprogram",
-  "libVersion": "3.5.1",
+  "libVersion": "3.5.8",
   "appid": "wxd5c622fd942f3a37",
   "projectname": "ToiletApp",
   "condition": {},

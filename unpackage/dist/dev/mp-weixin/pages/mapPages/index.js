@@ -1,9 +1,11 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
-const bmap = require("../../static/map/bmap-wx.js");
-const BMap = new bmap.BMapWX({
-  ak: "USr6JFLIBsbvx5EicRRmPmE7Mi3QsVDX"
+const bmap = require("../../static/map/myMapUtils.js");
+const BMap = new bmap.MapUtils({
+  id: "map"
 });
+let getLocationObj = null;
+const db = common_vendor.Vs.database();
 const _sfc_main = {
   setup(props, context) {
     const latitude = common_vendor.ref(0), longitude = common_vendor.ref(0);
@@ -27,10 +29,29 @@ const _sfc_main = {
         personNum: 100
       }
     ];
+    const getData = () => {
+      console.log("getData");
+      db.collection("toilet-data").where({
+        Address: "太原市小店区真武路优客快捷酒店(真武路店)东南侧约70米"
+      }).get().then((res) => {
+        console.log(res);
+      });
+    };
+    const getLocation = () => {
+      BMap.getWXLocation(...getLocationObj);
+      console.log("getLocation", latitude, longitude);
+      let point = {
+        latitude,
+        longitude
+      };
+      BMap.setCenter(point);
+    };
     return {
       latitude,
       longitude,
-      placeDatas
+      placeDatas,
+      getData,
+      getLocation
     };
   },
   data() {
@@ -39,9 +60,10 @@ const _sfc_main = {
     };
   },
   mounted() {
-    const getLocationObj = [
+    getLocationObj = [
       null,
       (res) => {
+        console.log("success", res.latitude, res.longitude);
         this.latitude = res.latitude;
         this.longitude = res.longitude;
       },
@@ -52,6 +74,7 @@ const _sfc_main = {
       }
     ];
     BMap.getWXLocation(...getLocationObj);
+    this.mapCtx = BMap.createContext();
   },
   methods: {
     goToiletDetail(id) {
@@ -65,12 +88,23 @@ const _sfc_main = {
     },
     gradeOnChange(e) {
       console.log("rate发生改变:" + JSON.stringify(e));
+    },
+    async getBMapJSAPI() {
+      let result = await common_vendor.index.request({
+        url: "http//api.map.baidu.com/api?type=webgl&v=1.0&ak=USr6JFLIBsbvx5EicRRmPmE7Mi3QsVDX"
+      });
+      const [res, err] = result;
+      console.log(res, err);
     }
   }
 };
 if (!Array) {
-  const _component_uni_rate = common_vendor.resolveComponent("uni-rate");
-  _component_uni_rate();
+  const _easycom_uni_rate2 = common_vendor.resolveComponent("uni-rate");
+  _easycom_uni_rate2();
+}
+const _easycom_uni_rate = () => "../../uni_modules/uni-rate/components/uni-rate/uni-rate.js";
+if (!Math) {
+  _easycom_uni_rate();
 }
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return common_vendor.e({
@@ -95,7 +129,9 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     h: common_vendor.o(($event) => $data.gradeVal = $event),
     i: common_vendor.p({
       modelValue: $data.gradeVal
-    })
+    }),
+    j: common_vendor.o((...args) => $setup.getData && $setup.getData(...args)),
+    k: common_vendor.o((...args) => $setup.getLocation && $setup.getLocation(...args))
   });
 }
 const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__scopeId", "data-v-c0ff98ac"]]);

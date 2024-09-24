@@ -125,7 +125,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
       name: "newPassword2"
     }),
     n: common_vendor.o((...args) => $options.submit && $options.submit(...args)),
-    o: common_vendor.sr("form", "27ed30fa-0"),
+    o: common_vendor.sr("form", "52377dcd-0"),
     p: common_vendor.p({
       value: $data.formData,
       ["err-show-type"]: "toast"

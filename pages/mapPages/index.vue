@@ -1,8 +1,7 @@
 <template>
 	<div class="container">
 		<div class="map_container">
-			<map class="map" :latitude="latitude" :longitude="longitude" :markers="markers"
-				@marker-tap="markerTap"></map>
+			<map id="map" class="map" :latitude="latitude" :longitude="longitude" :markers="markers" @marker-tap="markerTap"></map>
 		</div>
 
 		<div class="toiletsContainer">
@@ -26,6 +25,10 @@
 		</div>
 		<uni-rate v-model="gradeVal" @change="gradeOnChange" />
 	</div>
+	<div>
+		<button @click="getData">点击查询数据库</button>
+		<button @click="getLocation">点击定位</button>
+	</div>
 </template>
 
 <script>
@@ -34,10 +37,16 @@
 		onMounted,
 		onBeforeMount
 	} from 'vue';
-	const bmap = require('../../static/map/bmap-wx.js');
-	const BMap = new bmap.BMapWX({
-		ak: 'USr6JFLIBsbvx5EicRRmPmE7Mi3QsVDX'
-	})
+	// const bmap = require('../../static/map/bmap-wx.js');
+	// const BMap = new bmap.BMapWX({
+	// 	ak: 'USr6JFLIBsbvx5EicRRmPmE7Mi3QsVDX'
+	// });
+	const bmap = require('../../static/map/myMapUtils.js');
+	const BMap = new bmap.MapUtils({
+		id: 'map'
+	});
+	let getLocationObj = null;
+	const db = uniCloud.database();
 
 	export default {
 		setup(props, context) {
@@ -61,12 +70,32 @@
 					detail: '详情',
 					personNum: 100
 				}
-			]
+			];
+			const getData = () => {
+				console.log('getData');
+				db.collection("toilet-data").where({
+						Address: "太原市小店区真武路优客快捷酒店(真武路店)东南侧约70米"
+					}).get()
+					.then(res => {
+						console.log(res)
+					})
+			};
+			const getLocation = () => {
+				BMap.getWXLocation(...getLocationObj)
+				console.log('getLocation', latitude, longitude)
+				// let point = new BMapGL.Point(latitude, longitude);
+				let point = {
+					latitude,
+					longitude
+				}
+				BMap.setCenter(point)
+			};
 			return {
 				latitude,
 				longitude,
 				placeDatas,
-
+				getData,
+				getLocation,
 			}
 		},
 		data() {
@@ -76,10 +105,10 @@
 		},
 		mounted() {
 			// 获取位置、展示地图
-			const getLocationObj = [
+			getLocationObj = [
 				null,
 				(res) => {
-					// console.log('success', res.latitude, res.longitude)
+					console.log('success', res.latitude, res.longitude)
 					this.latitude = res.latitude;
 					this.longitude = res.longitude
 				},
@@ -88,7 +117,8 @@
 				},
 				() => {}
 			]
-			BMap.getWXLocation(...getLocationObj)
+			BMap.getWXLocation(...getLocationObj);
+			this.mapCtx = BMap.createContext();
 		},
 		methods: {
 			goToiletDetail(id) {
@@ -104,7 +134,15 @@
 
 			gradeOnChange(e) {
 				console.log('rate发生改变:' + JSON.stringify(e))
+			},
+			async getBMapJSAPI() {
+				let result = await uni.request({
+					url: 'http//api.map.baidu.com/api?type=webgl&v=1.0&ak=USr6JFLIBsbvx5EicRRmPmE7Mi3QsVDX',
+				})
+				const [res, err] = result;
+				console.log(res, err)
 			}
+
 		}
 	}
 </script>

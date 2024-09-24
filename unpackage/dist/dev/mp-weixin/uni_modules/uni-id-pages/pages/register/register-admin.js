@@ -148,14 +148,14 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
       required: true,
       modelValue: $data.formData.password2
     }),
-    t: common_vendor.sr("agreements", "11e43797-9,11e43797-0"),
+    t: common_vendor.sr("agreements", "63837ee6-9,63837ee6-0"),
     v: common_vendor.p({
       scope: "register"
     }),
     w: common_vendor.o((...args) => $options.submit && $options.submit(...args)),
     x: common_vendor.o((...args) => $options.navigateBack && $options.navigateBack(...args)),
     y: common_vendor.o((...args) => $options.toLogin && $options.toLogin(...args)),
-    z: common_vendor.sr("form", "11e43797-0"),
+    z: common_vendor.sr("form", "63837ee6-0"),
     A: common_vendor.p({
       value: $data.formData,
       rules: $data.rules,

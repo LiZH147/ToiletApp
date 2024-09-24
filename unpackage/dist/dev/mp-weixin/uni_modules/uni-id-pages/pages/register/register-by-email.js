@@ -200,7 +200,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
       required: true,
       modelValue: $data.formData.password2
     }),
-    t: common_vendor.sr("shortCode", "19c221e4-10,19c221e4-9"),
+    t: common_vendor.sr("shortCode", "b6d08b50-10,b6d08b50-9"),
     v: common_vendor.o(($event) => $data.formData.code = $event),
     w: common_vendor.p({
       email: $data.formData.email,
@@ -210,7 +210,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     x: common_vendor.p({
       name: "code"
     }),
-    y: common_vendor.sr("agreements", "19c221e4-11,19c221e4-0"),
+    y: common_vendor.sr("agreements", "b6d08b50-11,b6d08b50-0"),
     z: common_vendor.p({
       scope: "register"
     }),
@@ -218,7 +218,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     B: common_vendor.o((...args) => $options.navigateBack && $options.navigateBack(...args)),
     C: common_vendor.o((...args) => $options.registerByUserName && $options.registerByUserName(...args)),
     D: common_vendor.o((...args) => $options.toLogin && $options.toLogin(...args)),
-    E: common_vendor.sr("form", "19c221e4-0"),
+    E: common_vendor.sr("form", "b6d08b50-0"),
     F: common_vendor.p({
       value: $data.formData,
       rules: $data.rules,

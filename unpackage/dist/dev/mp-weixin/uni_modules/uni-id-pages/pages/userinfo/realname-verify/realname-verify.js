@@ -161,7 +161,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     q: common_vendor.p({
       name: "idCard"
     }),
-    r: common_vendor.sr("agreements", "cfda7a02-8"),
+    r: common_vendor.sr("agreements", "4e3904c9-8"),
     s: common_vendor.p({
       scope: "realNameVerify"
     }),
