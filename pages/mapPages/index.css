@@ -1,7 +1,8 @@
-.container{
+.container {
 	display: flex;
 	flex-direction: column;
 }
+
 .map_container {
 	flex: 1;
 }
@@ -9,6 +10,19 @@
 .map {
 	height: 25rem;
 	width: 100%;
+	display: relative;
+}
+
+.posIcon {
+	position: absolute;
+	bottom: 370px;
+	right: 20px;
+	padding: 3px 4px 0 4px;
+	background-color: lightgrey;
+	border-radius: 5px;
+	cursor: pointer;
+	font-size: 16px;
+	transition: background-color 0.3s;
 }
 
 .toiletsContainer {

@@ -1,4 +1,4 @@
-.container.data-v-c0ff98ac{
+.container.data-v-c0ff98ac {
 	display: flex;
 	flex-direction: column;
 }
@@ -8,6 +8,18 @@
 .map.data-v-c0ff98ac {
 	height: 25rem;
 	width: 100%;
+	display: relative;
+}
+.posIcon.data-v-c0ff98ac {
+	position: absolute;
+	bottom: 370px;
+	right: 20px;
+	padding: 3px 4px 0 4px;
+	background-color: lightgrey;
+	border-radius: 5px;
+	cursor: pointer;
+	font-size: 16px;
+	transition: background-color 0.3s;
 }
 .toiletsContainer.data-v-c0ff98ac {
 	display: flex;
