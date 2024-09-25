@@ -63,48 +63,70 @@ class MapUtils {
 
 	/**
 	 * 修改地图中心经纬度
+	 * 传入(null, null)时重新获取定位信息并移动地图
 	 * 
 	 * @@param {Float} latitude
 	 * @@param {Float} longitude
 	 */
 	async moveToCenter(latitude, longitude) {
 		const that = this;
-		if (latitude == 0 || longitude == 0) {
+		if (latitude === null || longitude === null) {
 			this.getWXLocation(
 				null,
 				(res) => {
 					// console.log('success + this', that, latitude, longitude)
-					latitude = res.latitude;
-					longitude = res.longitude
-					that.mapCtx.moveToLocation({
-						longitude: res.longitude, // 指定的经度
-						latitude: res.latitude, // 指定的纬度
-						success: function() {
-							console.log("移动到指定经纬度", latitude, longitude)
-						},
-						fail: function(err) {
-							console.error('移动到指定位置失败：', err);
-						},
-					});
+					that.myMoveToLocation(res.latitude, res.longitude)
 				},
 				(res) => {
 					console.log('err', res)
 				},
 				() => {}
 			)
+		} else {
+			that.myMoveToLocation(latitude, longitude)
 		}
-		// await console.log(latitude, longitude, typeof latitude)
-		// 调用 moveToLocation 方法将地图移动到指定的经纬度
-		// await this.mapCtx.moveToLocation({
-		// 	longitude: longitude, // 指定的经度
-		// 	latitude: latitude, // 指定的纬度
-		// 	success: function() {
-		// 		console.log("移动到指定经纬度", latitude, longitude)
-		// 	},
-		// 	fail: function(err) {
-		// 		console.error('移动到指定位置失败：', err);
-		// 	},
-		// });
+
+	}
+	/**
+	 * 对微信地图API中moveToLocation的封装
+	 * 
+	 * @param {float} latitude 
+	 * @param {float} longitude 
+	 */
+	myMoveToLocation(latitude, longitude) {
+		const that = this;
+		that.mapCtx.moveToLocation({
+			longitude: longitude, // 指定的经度
+			latitude: latitude, // 指定的纬度
+			success: function() {
+				console.log("移动到指定经纬度", latitude, longitude)
+			},
+			fail: function(err) {
+				console.error('移动到指定位置失败：', err);
+			},
+		});
+	}
+
+	/**
+	 * 添加标记点
+	 * 
+	 * @param {float} latitude 
+	 * @param {float} longitude 
+	 */
+	addMarker(id, latitude, longitude){
+		console.log("初始", id, latitude, longitude)
+		const that = this;
+		that.mapCtx.addMarkers({
+			markers: [{
+				id: id,
+				latitude: latitude,
+				longitude: longitude,
+				iconPath: '../../static/imgs/marker_red.png',
+				width: '20px',
+				height: '26px'
+			}],
+			success: res => console.log("成功添加market", latitude, longitude)
+		})
 	}
 }
 

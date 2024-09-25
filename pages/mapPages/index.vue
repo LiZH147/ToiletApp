@@ -1,8 +1,11 @@
 <template>
 	<div class="container">
 		<div class="map_container">
-			<map id="map" class="map" :latitude="latitude" :longitude="longitude" :markers="markers"
-				@marker-tap="markerTap"></map>
+			<map id="map" class="map" :latitude="latitude" :longitude="longitude"></map>
+			
+			<view @click="getLocation" class="posIcon">
+				<img style="width: 24px; height: 24px;" src="../../static/imgs/icons8-my-location-50.png" alt="" />
+			</view>
 		</div>
 
 		<div class="toiletsContainer">
@@ -28,7 +31,8 @@
 	</div>
 	<div>
 		<button @click="getData">点击查询数据库</button>
-		<button @click="getLocation">点击定位</button>
+		<!-- <button @click="getLocation">点击定位</button> -->
+		<!-- <button @click="addMarker">点击添加中心点坐标</button> -->
 	</div>
 </template>
 
@@ -78,15 +82,18 @@
 					})
 			};
 			const getLocation = () => {
-				BMap.getCenterLocation();
-				BMap.moveToCenter(0, 0);
+				BMap.moveToCenter(null, null);
 			};
+			const addMarker = () => {
+				BMap.addMarker(0, latitude._value, longitude._value)
+			}
 			return {
 				latitude,
 				longitude,
 				placeDatas,
 				getData,
 				getLocation,
+				addMarker,
 			}
 		},
 		data() {
@@ -95,13 +102,15 @@
 			}
 		},
 		mounted() {
+			this.mapCtx = BMap.createContext();
 			// 获取位置、展示地图
 			getLocationObj = [
 				null,
 				(res) => {
-					console.log('success', res.latitude, res.longitude)
+					console.log('success', this.latitude, res.latitude, res.longitude)
 					this.latitude = res.latitude;
-					this.longitude = res.longitude
+					this.longitude = res.longitude;
+					this.addMarker()
 				},
 				(res) => {
 					console.log('err', res)
@@ -109,7 +118,6 @@
 				() => {}
 			]
 			BMap.getWXLocation(...getLocationObj);
-			this.mapCtx = BMap.createContext();
 		},
 		methods: {
 			goToiletDetail(id) {

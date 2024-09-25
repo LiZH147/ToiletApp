@@ -1,5 +1,6 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
+const common_assets = require("../../common/assets.js");
 const bmap = require("../../static/map/myMapUtils.js");
 const BMap = new bmap.MapUtils({
   id: "map"
@@ -38,15 +39,18 @@ const _sfc_main = {
       });
     };
     const getLocation = () => {
-      BMap.getCenterLocation();
-      BMap.moveToCenter(0, 0);
+      BMap.moveToCenter(null, null);
+    };
+    const addMarker = () => {
+      BMap.addMarker(0, latitude._value, longitude._value);
     };
     return {
       latitude,
       longitude,
       placeDatas,
       getData,
-      getLocation
+      getLocation,
+      addMarker
     };
   },
   data() {
@@ -55,12 +59,14 @@ const _sfc_main = {
     };
   },
   mounted() {
+    this.mapCtx = BMap.createContext();
     getLocationObj = [
       null,
       (res) => {
-        console.log("success", res.latitude, res.longitude);
+        console.log("success", this.latitude, res.latitude, res.longitude);
         this.latitude = res.latitude;
         this.longitude = res.longitude;
+        this.addMarker();
       },
       (res) => {
         console.log("err", res);
@@ -69,7 +75,6 @@ const _sfc_main = {
       }
     ];
     BMap.getWXLocation(...getLocationObj);
-    this.mapCtx = BMap.createContext();
   },
   methods: {
     goToiletDetail(id) {
@@ -98,8 +103,8 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return common_vendor.e({
     a: $setup.latitude,
     b: $setup.longitude,
-    c: _ctx.markers,
-    d: common_vendor.o((...args) => _ctx.markerTap && _ctx.markerTap(...args)),
+    c: common_assets._imports_0$2,
+    d: common_vendor.o((...args) => $setup.getLocation && $setup.getLocation(...args)),
     e: $setup.placeDatas[0].title
   }, $setup.placeDatas[0].title ? {
     f: common_vendor.f($setup.placeDatas, (item, k0, i0) => {
@@ -118,8 +123,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     i: common_vendor.p({
       modelValue: $data.gradeVal
     }),
-    j: common_vendor.o((...args) => $setup.getData && $setup.getData(...args)),
-    k: common_vendor.o((...args) => $setup.getLocation && $setup.getLocation(...args))
+    j: common_vendor.o((...args) => $setup.getData && $setup.getData(...args))
   });
 }
 const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__scopeId", "data-v-c0ff98ac"]]);
