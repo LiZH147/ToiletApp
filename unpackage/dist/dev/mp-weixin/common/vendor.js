@@ -8317,7 +8317,7 @@ class v {
 function I(e2) {
   return e2 && "string" == typeof e2 ? JSON.parse(e2) : e2;
 }
-const S = true, b = "mp-weixin", A = I(define_process_env_UNI_SECURE_NETWORK_CONFIG_default), C = b, P = I(""), T = I('[{"provider":"alipay","spaceName":"toilet-app","spaceId":"env-00jxhaxsxwpv","spaceAppId":"2021004160669431","accessKey":"EqMZzzl3MXpPa2AJ","secretKey":"F9Gq2JZqtWZQN7jv"}]') || [];
+const S = true, b = "mp-weixin", A = I(define_process_env_UNI_SECURE_NETWORK_CONFIG_default), C = b, P = I('{\n    "address": [\n        "127.0.0.1",\n        "192.168.60.1",\n        "192.168.220.1",\n        "192.168.31.99"\n    ],\n    "debugPort": 9000,\n    "initialLaunchType": "local",\n    "servePort": 7000,\n    "skipFiles": [\n        "<node_internals>/**",\n        "F:/HBuilderX.3.6.4.20220922/HBuilderX/plugins/unicloud/**/*.js"\n    ]\n}\n'), T = I('[{"provider":"alipay","spaceName":"toilet-app","spaceId":"env-00jxhaxsxwpv","spaceAppId":"2021004160669431","accessKey":"EqMZzzl3MXpPa2AJ","secretKey":"F9Gq2JZqtWZQN7jv"}]') || [];
 let O = "";
 try {
   O = "__UNI__F87E279";
