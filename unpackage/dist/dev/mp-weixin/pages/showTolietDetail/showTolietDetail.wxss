@@ -1,0 +1,66 @@
+.container.data-v-98423a9e {
+	display: flex;
+	flex-direction: column;
+}
+.map_container.data-v-98423a9e {
+	flex: 1;
+}
+.map.data-v-98423a9e {
+	height: 25rem;
+	width: 100%;
+	display: relative;
+}
+.posIcon.data-v-98423a9e {
+	position: absolute;
+	bottom: 370px;
+	right: 20px;
+	padding: 3px 4px 0 4px;
+	background-color: lightgrey;
+	border-radius: 5px;
+	cursor: pointer;
+	font-size: 16px;
+	transition: background-color 0.3s;
+}
+.toiletsContainer.data-v-98423a9e {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	border-top-left-radius: 50rpx;
+	border-top-right-radius: 50rpx;
+	height: 100%;
+	background-color: #D9D9D9
+}
+#con_data.data-v-98423a9e {
+	display: flex;
+	flex-direction: row;
+	margin: 0.2rem;
+	width: 90%;
+	background-color: #f1ecec
+}
+#con_left.data-v-98423a9e {
+	/* border: 1px solid red; */
+	margin-top: 0.3rem;
+	margin-left: 0.3rem;
+	flex: 1;
+}
+#con_right.data-v-98423a9e {
+	margin-right: 0.3rem;
+	margin-top: 0.3rem;
+	margin-bottom: 0.3rem;
+	flex-grow: 0.3;
+}
+.con_btn.data-v-98423a9e{
+  border-radius: 5rpx;
+  margin-top: 5rpx;
+}
+.grade_list.data-v-98423a9e{
+	display: flex;
+	flex-direction: row;
+}
+.grade_name.data-v-98423a9e{
+	flex-grow: 0.1;
+}
+.grade_detail.data-v-98423a9e{
+	flex: 1;
+}

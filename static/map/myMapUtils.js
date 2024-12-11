@@ -113,7 +113,7 @@ class MapUtils {
 	 * @param {float} latitude 
 	 * @param {float} longitude 
 	 */
-	addMarker(id, latitude, longitude){
+	addMarker(id, latitude, longitude) {
 		console.log("初始", id, latitude, longitude)
 		const that = this;
 		that.mapCtx.addMarkers({
@@ -127,6 +127,23 @@ class MapUtils {
 			}],
 			success: res => console.log("成功添加market", latitude, longitude)
 		})
+	}
+
+	/**
+	 * 计算直线距离
+	 * 
+	 * @param {float} latitude 
+	 * @param {float} longitude
+	 */
+	calcDistance(latitude, longitude, newLatitude, newLongitude) {
+		let laDiffer = latitude - newLatitude;
+		let loDiffer = longitude - newLongitude;
+		laDiffer < 0 ? laDiffer = -laDiffer : null;
+		loDiffer < 0 ? loDiffer = -loDiffer : null;
+
+		const res = Math.sqrt(laDiffer * laDiffer + loDiffer + loDiffer);
+		
+		return res;
 	}
 }
 

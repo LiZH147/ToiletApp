@@ -6,7 +6,7 @@ const BMap = new bmap.MapUtils({
   id: "map"
 });
 let getLocationObj = null;
-const db = common_vendor.Vs.database();
+const db = common_vendor.Zs.database();
 const _sfc_main = {
   setup(props, context) {
     const latitude = common_vendor.ref(0), longitude = common_vendor.ref(0);
@@ -83,10 +83,10 @@ const _sfc_main = {
   mounted() {
   },
   methods: {
-    goToiletDetail(id) {
-      console.log("click detail", id);
+    goToiletDetail(id, distance) {
+      console.log("click detail", id, distance);
       common_vendor.index.navigateTo({
-        url: `/pages/showTolietDetail/showTolietDetail?id=${id}`
+        url: `/pages/showTolietDetail/showTolietDetail?id=${id}&distance=${distance}`
       });
     },
     goNavigation(latitude, longtitude) {
@@ -96,24 +96,23 @@ const _sfc_main = {
       console.log("rate发生改变:" + JSON.stringify(e));
     },
     queryToiletData() {
-      console.log("queryToiletData", this.southwest, this.northeast, this.placeDatas);
       db.collection("toilet-data").where(
         `Latitude > ${this.southwest.latitude} && Latitude < ${this.northeast.latitude} && Longitude > ${this.southwest.longitude} && Longitude < ${this.northeast.longitude}`
       ).get().then((res) => {
+        this.calcDis(res.result.data);
         this.placeDatas = res.result.data;
         console.log("placeDatas", this.placeDatas);
+      });
+    },
+    calcDis(arr) {
+      arr.forEach((placeData) => {
+        let distance = BMap.calcDistance(this.latitude, this.longitude, placeData.Latitude, placeData.Longitude);
+        distance = Math.floor(distance * 1e3);
+        placeData.distance = distance + "m";
       });
     }
   }
 };
-if (!Array) {
-  const _easycom_uni_rate2 = common_vendor.resolveComponent("uni-rate");
-  _easycom_uni_rate2();
-}
-const _easycom_uni_rate = () => "../../uni_modules/uni-rate/components/uni-rate/uni-rate.js";
-if (!Math) {
-  _easycom_uni_rate();
-}
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return common_vendor.e({
     a: $setup.latitude,
@@ -125,20 +124,15 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     f: common_vendor.f($setup.placeDatas, (item, k0, i0) => {
       return {
         a: common_vendor.t(item.Address),
-        b: common_vendor.t(item.longitude),
-        c: common_vendor.o(($event) => $options.goToiletDetail(item._id), item._id),
+        b: common_vendor.t(item.distance),
+        c: common_vendor.o(($event) => $options.goToiletDetail(item._id, item.distance), item._id),
         d: common_vendor.o(($event) => $options.goNavigation(item.latitude, item.longitude), item._id),
         e: item._id
       };
-    })
-  } : {}, {
-    g: common_vendor.o($options.gradeOnChange),
-    h: common_vendor.o(($event) => $data.gradeVal = $event),
-    i: common_vendor.p({
-      modelValue: $data.gradeVal
     }),
-    j: common_vendor.o(($event) => $options.queryToiletData())
-  });
+    g: common_vendor.t(),
+    h: common_vendor.t()
+  } : {});
 }
 const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__scopeId", "data-v-c0ff98ac"]]);
 wx.createPage(MiniProgramPage);

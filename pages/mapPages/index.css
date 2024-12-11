@@ -45,7 +45,7 @@
 }
 
 #con_left {
-	border: 1px solid red;
+	/* border: 1px solid red; */
 	margin-top: 0.3rem;
 	margin-left: 0.3rem;
 	flex: 1;
@@ -55,5 +55,10 @@
 	margin-right: 0.3rem;
 	margin-top: 0.3rem;
 	margin-bottom: 0.3rem;
-	/* flex-grow: 1; */
+	flex-grow: 0.3;
+}
+
+.con_btn{
+  border-radius: 5rpx;
+  margin-top: 5rpx;
 }

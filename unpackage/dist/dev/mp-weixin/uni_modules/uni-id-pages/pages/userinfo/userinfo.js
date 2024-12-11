@@ -1,7 +1,7 @@
 "use strict";
 const common_vendor = require("../../../../common/vendor.js");
 const uni_modules_uniIdPages_common_store = require("../../common/store.js");
-const uniIdCo = common_vendor.Vs.importObject("uni-id-co");
+const uniIdCo = common_vendor.Zs.importObject("uni-id-co");
 const _sfc_main = {
   computed: {
     userInfo() {
@@ -113,7 +113,7 @@ const _sfc_main = {
       });
     },
     async bindThirdAccount(provider) {
-      const uniIdCo2 = common_vendor.Vs.importObject("uni-id-co");
+      const uniIdCo2 = common_vendor.Zs.importObject("uni-id-co");
       const bindField = {
         weixin: "wx_openid",
         alipay: "ali_openid",

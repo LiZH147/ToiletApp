@@ -14,26 +14,25 @@
 			<template v-if="placeDatas.length && placeDatas[0].Address">
 				<div id="con_data" v-for="item in placeDatas" :key="item._id">
 					<div id="con_left">
-						<p>厕所名：{{ item.Address }}</p>
-						<!-- <div>
-							<p>星级: {{item.grade}}</p>
+						<p class="con_left_p">位置：{{ item.Address }}</p>
+						<div class="con_left_p">
+							<p>星级: {{  }}</p>
 						</div>
-						<p>评价人数: {{item.personNum}}</p> -->
+						<p class="con_left_p">评价人数: {{  }}</p>
 					</div>
-					<!-- <div style="width: 2rem;background-color: red;"></div> -->
+					<div style="width: 1rem;"></div>
 					<div id="con_right">
-						<p id="con_distance">距离：{{ item.longitude }}</p>
-						<button id="con_detail" @click="goToiletDetail(item._id)">详情</button>
-						<button id="con_direction" @click="goNavigation(item.latitude, item.longitude)">导航</button>
+						<p id="con_distance">距离：{{ item.distance }}</p>
+						<button id="con_detail" class="con_btn" @click="goToiletDetail(item._id, item.distance)">详情</button>
+						<button id="con_direction" class="con_btn" @click="goNavigation(item.latitude, item.longitude)">导航</button>
 					</div>
 
 				</div>
 			</template>
 		</div>
-		<uni-rate v-model="gradeVal" @change="gradeOnChange" />
 	</div>
 	<div>
-		<button @click="queryToiletData()">点击查询数据库</button>
+		<!-- <button @click="queryToiletData()">点击查询数据库</button> -->
 		<!-- <button @click="getLocation">点击定位</button> -->
 		<!-- <button @click="addMarker">点击添加中心点坐标</button> -->
 	</div>
@@ -149,10 +148,10 @@
 		},
 		mounted() {},
 		methods: {
-			goToiletDetail(id) {
-				console.log("click detail", id);
+			goToiletDetail(id, distance) {
+				console.log("click detail", id, distance);
 				uni.navigateTo({
-					url: `/pages/showTolietDetail/showTolietDetail?id=${id}`
+					url: `/pages/showTolietDetail/showTolietDetail?id=${id}&distance=${distance}`
 				})
 			},
 
@@ -165,16 +164,29 @@
 			},
 
 			queryToiletData() {
-				console.log("queryToiletData", this.southwest, this.northeast, this.placeDatas)
+				// console.log("queryToiletData", this.southwest, this.northeast, this.placeDatas)
 				db.collection("toilet-data").where(
 						`Latitude > ${this.southwest.latitude} && Latitude < ${this.northeast.latitude} && Longitude > ${this.southwest.longitude} && Longitude < ${this.northeast.longitude}`
 					).get()
 					.then(res => {
 						// console.log(res.result.data);
+						this.calcDis(res.result.data);
 						this.placeDatas = res.result.data;
 						console.log('placeDatas', this.placeDatas)
-					})
+					});
+					
 			},
+			
+			calcDis(arr){
+				// this.latitude, this.latitude存储着初始经纬度
+				arr.forEach(placeData => {
+					let distance = BMap.calcDistance(this.latitude, this.longitude, placeData.Latitude, placeData.Longitude);
+					// console.log(distance)
+					distance = Math.floor(distance * 1000);
+					// console.log(distance)
+					placeData.distance = distance + 'm';
+				})
+			}
 
 		}
 	}

@@ -1,0 +1,1 @@
+{"bsonType":"object","required":[],"permission":{"read":true,"create":true,"update":true,"delete":true},"properties":{"_id":{"description":"ID，系统自动生成"},"autrhor":{"description":"评分者id"},"grade_total":{"description":"总体评分"},"grade_env":{"description":"环境评分"},"grade_air":{"description":"空气质量评分"},"create_time":{"description":"创建评分时间"},"toilet_id":{"description":"评分的厕所id"}}}
