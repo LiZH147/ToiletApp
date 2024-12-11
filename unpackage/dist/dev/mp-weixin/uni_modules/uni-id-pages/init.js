@@ -1,7 +1,7 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
 const uni_modules_uniIdPages_config = require("./config.js");
-const uniIdCo = common_vendor.Vs.importObject("uni-id-co", {
+const uniIdCo = common_vendor.Zs.importObject("uni-id-co", {
   customUI: true
 });
 const {
@@ -36,7 +36,7 @@ async function uniIdPageInit() {
       );
     }
   }
-  const db = common_vendor.Vs.database();
+  const db = common_vendor.Zs.database();
   db.on("error", onDBError);
   function onDBError({
     code,
@@ -44,8 +44,8 @@ async function uniIdPageInit() {
     message
   }) {
   }
-  if (common_vendor.Vs.onRefreshToken) {
-    common_vendor.Vs.onRefreshToken(() => {
+  if (common_vendor.Zs.onRefreshToken) {
+    common_vendor.Zs.onRefreshToken(() => {
       if (common_vendor.index.getPushClientId) {
         common_vendor.index.getPushClientId({
           success: async function(e) {
